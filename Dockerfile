@@ -1,8 +1,8 @@
 FROM centos:7 as ipxe-builder
-ENV IPXE_MASTER_SNAPSHOT=https://git.ipxe.org/ipxe.git/snapshot/master.tar.gz
-RUN yum -y install gcc xz-devel make perl
+ENV IPXE_MASTER_SNAPSHOT=https://github.com/ipxe/ipxe/archive/refs/tags/v1.21.1.tar.gz
+RUN yum -y install gcc xz-devel make perl wget
 RUN mkdir /tmp/ipxe
-RUN curl -f ${IPXE_MASTER_SNAPSHOT} -o /tmp/ipxe/master.tar.gz
+RUN wget ${IPXE_MASTER_SNAPSHOT} -O /tmp/ipxe/master.tar.gz
 RUN tar --strip-components=1 -xzf /tmp/ipxe/master.tar.gz -C /tmp/ipxe
 WORKDIR /tmp/ipxe/src
 COPY ipxescript /tmp/ipxe/src/
